@@ -69,6 +69,17 @@ def createUser():
 
 	else:
 		return redirect('/')
+
+@app.route('/bug/', methods=['POST'])
+def createUser():
+	if request.method == 'POST':
+
+		repot = request.form['report']
+
+		return report
+
+	else:
+		return redirect('/')
  
 
 @app.route('/')
