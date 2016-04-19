@@ -74,7 +74,7 @@ def createUser():
 def bugReport():
 	if request.method == 'POST':
 
-		repot = request.form['report']
+		report = request.form['report']
 
 		return report
 
