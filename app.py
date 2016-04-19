@@ -42,14 +42,14 @@ def addUserToDB(name,email):
 
 @app.route('/add', methods = ['POST'])
 def addUser():
-	if request.method == 'POST'
+	if request.method == 'POST':
 		print "recieved a post"
 
 		addUserToDB('post','test')
 
 		return "POST: Added a test user"
 
-	else
+	else:
 		return "Request method was not a POST..."
  
 
