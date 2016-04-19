@@ -1,10 +1,22 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, redirect
 import psycopg2
 
 app = Flask(__name__)
 
-con = None
+class User:
 
+    def __init__(self, name, password, email, distributor, salesperson):
+        self.name = name
+        self.password = password
+        self.email = email
+        self.distributor = distributor
+        self. salesperson = salesperson
+        self.favorites = []    # creates a new empty list for each dog
+
+    def add_favorite(self, trick):
+        self.favorites.append(favorite)
+
+con = None
 def createDBConnection():
 
 	try:
@@ -17,12 +29,12 @@ def createDBConnection():
 	finally:
 		return con
 
-def addUserToDB(name,email):
+def addUserToDB(newUser):
 	con = createDBConnection()
 
 	try:
 		cur = con.cursor()
-		cur.execute("INSERT INTO users VALUES(%s,%s)", (name, email))
+		cur.execute("INSERT INTO users VALUES(%s,%s)", (newUser.name, newUser.email))
 		con.commit()
 		print ("Added '" + name + " to the database")
 
@@ -37,22 +49,26 @@ def addUserToDB(name,email):
 	finally:
 		if con:
 			con.close
-		return name + " is now in Andrews database..."
+		return
 
 
-@app.route('/add/', methods=['GET','POST'])
-def addUser():
-	print "routed"
+@app.route('/create/', methods=['POST'])
+def createUser():
 	if request.method == 'POST':
 
 		name = request.form['username']
+		psswrd = request.form['psswrd']
 		email = request.form['email']
-		addUserToDB(name,email)
+		distributor = request.form['distributor']
+		salesperson = request.form['salesperson']
 
-		return "Added" + name + "to the database!"
+		newUser = User(name,psswrd,email,distributor,salesperson)
+		addUserToDB(newUser)
+
+		return redirect('/data')
 
 	else:
-		return "Request method was not a POST..."
+		return redirect('/')
  
 
 @app.route('/')
