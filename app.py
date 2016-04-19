@@ -17,10 +17,12 @@ def createDBConnection():
 	finally:
 		return con
 
-@app.route('/add/<name>')
-def addUser(name):
+@app.route('/add/', methods = ['POST'])
+def addUser():
 
-	email = name+"@magswitch.com.au"
+	name = request.form['username']
+	email = request.form['email']
+	distributorVal = request.form['distributor']
 
 	con = createDBConnection()
 
