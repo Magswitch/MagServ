@@ -75,8 +75,8 @@ def bugReport():
 	if request.method == 'POST':
 
 		report = request.form['report']
-		f = open(bugs.text, 'w')
-		f.write(report)
+		f = open(bugs.text, 'a')
+		f.write('something')
 		f.write('\n')
 		f.close()
 		return report
