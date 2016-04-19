@@ -10,20 +10,14 @@ def createDBConnection():
 	try:
 		con = psycopg2.connect(database='gentryar', user='gentryar', password='ginger whale station')
 
-	except psycopg2.DatabaseError:
-	    print ("Connection Error")
+	except psycopg2.DatabaseError as e:
+	    print "Connection Error." + e
 	    sys.exit(1)
 
 	finally:
 		return con
 
-@app.route('/add', methods = ['POST'])
-def addUser():
-
-	print "recieved a post"
-	name = request.form['username']
-	email = request.form['email']
-
+def addUserToDB(name,email):
 	con = createDBConnection()
 
 	try:
@@ -32,18 +26,30 @@ def addUser():
 		con.commit()
 		print ("Added '" + name + " to the database")
 
-	except psycopg2.DatabaseError:
+	except psycopg2.DatabaseError as e:
+
+		print "Error adding a user." + e
 
 		if con:
 			con.rollback
-
-		print ("Error adding a user")
 		sys.exit(1)
 
 	finally:
 		if con:
 			con.close
 		return name + " is now in Andrews database..."
+
+
+@app.route('/add', methods = ['POST'])
+def addUser():
+
+	name = request.form['username']
+	email = request.form['email']
+	print "recieved a post"
+
+	addUserToDB(name,email)
+
+	return "Added a User"
  
 
 @app.route('/')
@@ -65,12 +71,12 @@ def names():
 		return '<h4><br>'.join(data)
 		 
 
-	except psycopg2.DatabaseError:
+	except psycopg2.DatabaseError as e:
 
 		if con:
 			con.rollback
 
-		print("Error displaying the users")
+		print "Error displaying the users." + e
 		sys.exit(1)
 
 
