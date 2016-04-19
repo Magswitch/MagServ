@@ -17,12 +17,12 @@ def createDBConnection():
 	finally:
 		return con
 
-@app.route('/add/', methods = ['POST'])
+@app.route('/add', methods = ['POST'])
 def addUser():
 
+	print "recieved a post"
 	name = request.form['username']
 	email = request.form['email']
-	distributorVal = request.form['distributor']
 
 	con = createDBConnection()
 
