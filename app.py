@@ -40,7 +40,7 @@ def addUserToDB(name,email):
 		return name + " is now in Andrews database..."
 
 
-@app.route('/add', method='POST')
+@app.route('/add', methods=['GET','POST'])
 def addUser():
 	if request.method == 'POST':
 		print "recieved a post"
