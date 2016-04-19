@@ -44,11 +44,12 @@ def addUserToDB(name,email):
 def addUser():
 	print "routed"
 	if request.method == 'POST':
-		print "recieved a post"
 
-		addUserToDB('post','test')
+		name = request.form['username']
+		email = request.form['email']
+		addUserToDB(name,email)
 
-		return "POST: Added a test user"
+		return "Added" + name + "to the database!"
 
 	else:
 		return "Request method was not a POST..."
