@@ -75,8 +75,8 @@ def bugReport():
 	if request.method == 'POST':
 
 		report = request.form['report']
-		with open("bugs.txt","wb") as fo:
-  			fo.write("This is Test Data")
+		with open("bugs.txt","a") as fo:
+  			fo.write(report + '\n@@@@@@@@@@@@@@@@\n')
 		return report
 
 	else:
