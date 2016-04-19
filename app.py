@@ -42,6 +42,7 @@ def addUserToDB(name,email):
 
 @app.route('/add/', methods=['GET','POST'])
 def addUser():
+	print "routed"
 	if request.method == 'POST':
 		print "recieved a post"
 
