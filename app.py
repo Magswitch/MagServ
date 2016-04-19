@@ -55,6 +55,7 @@ def addUser():
 
 @app.route('/')
 def index():
+	print "Accessed the server"
 	return 'This is Andrew\'s server. If you see this message, it means that it\'s working.'
 
 
