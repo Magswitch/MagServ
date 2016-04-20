@@ -10,7 +10,7 @@ class User:
         self.password = password
         self.email = email
         self.distributor = distributor
-        self. salesperson = salesperson
+        self.salesperson = salesperson
         self.favorites = []    # creates a new empty list for each dog
 
     def add_favorite(self, trick):
