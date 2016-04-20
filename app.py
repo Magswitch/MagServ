@@ -11,7 +11,9 @@ class User:
         self.email = email
         self.distributor = distributor
         self.salesperson = salesperson
-        self.favorites = []    # creates a new empty list for each dog
+        self.favorites = [] 
+
+        print ("new user created: " + self.name)
 
     def add_favorite(self, trick):
         self.favorites.append(favorite)
@@ -49,6 +51,7 @@ def addUserToDB(newUser):
 	finally:
 		if con:
 			con.close
+			
 		return
 
 
