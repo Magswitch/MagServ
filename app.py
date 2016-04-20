@@ -112,7 +112,7 @@ def names():
 			email.append(record[2])
 			distributor.append(record[3])
 			salesperson.append(record[4])	
-		return '<br>'.join(salesperson) + ' - '.join(distributor) + ' - '.join(email) + ' - '.join(psswrd) + ' - '.join(name)
+		return name
 		 
 
 	except psycopg2.DatabaseError as e:
