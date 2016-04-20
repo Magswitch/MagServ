@@ -102,9 +102,9 @@ def names():
 	try:
 		cur = con.cursor()
 		cur.execute("SELECT * FROM users")
-		t = PrettyTable(['Name', 'Password'])
+		t = PrettyTable(['Name', 'Password', 'Email', 'Distributor', 'Salesperson'])
 		for record in cur:
-			t.add_row([record[0],record[1]])
+			t.add_row([record[0],record[1],record[2],record[3],record[4]])
 		return t.get_html_string()
 		 
 
