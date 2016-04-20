@@ -101,10 +101,12 @@ def names():
 	try:
 		cur = con.cursor()
 		cur.execute("SELECT * FROM users")
-		data = []
+		name = []
+		psswrd = []
 		for record in cur:
-			data.append(record[0] + ' - ' + record[1] + ' - ' + record[2] + ' - ' + record[3] + ' - ' + record [4])		
-		return '<br>'.join(data)
+			name.append(record[0])
+			psswrd.append(record[1])		
+		return '<br>'.join(name).join(psswrd)
 		 
 
 	except psycopg2.DatabaseError as e:
