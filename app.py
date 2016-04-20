@@ -105,7 +105,7 @@ def names():
 		t = PrettyTable(['Name', 'Password'])
 		for record in cur:
 			t.add_row([record[0],record[1]])
-		return 'this still works'
+		return t.get_html_string()
 		 
 
 	except psycopg2.DatabaseError as e:
