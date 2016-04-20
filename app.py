@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, redirect
 import psycopg2
+from prettytable import PrettyTable
 
 app = Flask(__name__)
 
@@ -101,18 +102,10 @@ def names():
 	try:
 		cur = con.cursor()
 		cur.execute("SELECT * FROM users")
-		name = []
-		psswrd = []
-		email = []
-		distributor = []
-		salesperson = []
+		t = PrettyTable(['Name', 'Password'])
 		for record in cur:
-			name.append(record[0])
-			psswrd.append(record[1])	
-			email.append(record[2])
-			distributor.append(record[3])
-			salesperson.append(record[4])	
-		return name[0:]
+			t.add_row([record[0],record[1]])
+		return t
 		 
 
 	except psycopg2.DatabaseError as e:
