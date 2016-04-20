@@ -36,7 +36,7 @@ def addUserToDB(newUser):
 
 	try:
 		cur = con.cursor()
-		cur.execute("INSERT INTO users VALUES(%s,%s)", (newUser.name, newUser.psswrd))
+		cur.execute("INSERT INTO users VALUES(%s,%s,%s,%s,%s)", (newUser.name, newUser.psswrd, newUser.email, newUser.distributor, newUser.salesperson))
 		con.commit()
 		print ("Added '" + name + " to the database.")
 
@@ -103,7 +103,7 @@ def names():
 		cur.execute("SELECT * FROM users")
 		data = []
 		for record in cur:
-			data.append(record[0])		
+			data.append(record[1])		
 		return '<h4><br>'.join(data)
 		 
 
