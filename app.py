@@ -103,10 +103,13 @@ def names():
 		cur.execute("SELECT * FROM users")
 		name = []
 		psswrd = []
+		email = []
+		distributor = []
+		salesperson = []
 		for record in cur:
 			name.append(record[0])
 			psswrd.append(record[1])		
-		return '<br>'.join(name).join(psswrd)
+		return '<br>'.join(salesperson)' - '.join(distributor)' - '.join(email)' - '.join(psswrd)' - '.join(name)
 		 
 
 	except psycopg2.DatabaseError as e:
