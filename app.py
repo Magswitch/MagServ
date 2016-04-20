@@ -5,9 +5,9 @@ app = Flask(__name__)
 
 class User:
 
-    def __init__(self, name, password, email, distributor, salesperson):
+    def __init__(self, name, psswrd, email, distributor, salesperson):
         self.name = name
-        self.password = password
+        self.psswrd = psswrd
         self.email = email
         self.distributor = distributor
         self.salesperson = salesperson
