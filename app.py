@@ -36,9 +36,9 @@ def addUserToDB(newUser):
 
 	try:
 		cur = con.cursor()
-		cur.execute("INSERT INTO users VALUES(%s,%s,%s)", (newUser.name, newUser.psswrd, newUser.email))
+		cur.execute("INSERT INTO users VALUES(%s,%s)", (newUser.name, newUser.psswrd))
 		con.commit()
-		print ("Added '" + name + " to the database")
+		print ("Added '" + name + " to the database.")
 
 	except psycopg2.DatabaseError as e:
 
@@ -51,7 +51,7 @@ def addUserToDB(newUser):
 	finally:
 		if con:
 			con.close
-			
+
 		return
 
 
