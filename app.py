@@ -108,8 +108,11 @@ def names():
 		salesperson = []
 		for record in cur:
 			name.append(record[0])
-			psswrd.append(record[1])		
-		return '<br>'.join(salesperson)' - '.join(distributor)' - '.join(email)' - '.join(psswrd)' - '.join(name)
+			psswrd.append(record[1])	
+			email.append(record[2])
+			distributor.append(record[3])
+			salesperson.append(record[4])	
+		return '<br>'.join(salesperson) + ' - '.join(distributor) + ' - '.join(email) + ' - '.join(psswrd) + ' - '.join(name)
 		 
 
 	except psycopg2.DatabaseError as e:
