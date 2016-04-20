@@ -103,8 +103,8 @@ def names():
 		cur.execute("SELECT * FROM users")
 		data = []
 		for record in cur:
-			data.append(record[1])		
-		return '<h4><br>'.join(data)
+			data.append(record[0] + ' - ' + record[1] + ' - ' + record[2] + ' - ' + record[3] + ' - ' + record [4])		
+		return '<br>'.join(data)
 		 
 
 	except psycopg2.DatabaseError as e:
