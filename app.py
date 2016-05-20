@@ -3,18 +3,36 @@ import psycopg2
 from prettytable import PrettyTable
 
 app = Flask(__name__)
+con = None
 
 class User:
 
-	def __init__(self, email):
+	longitudes = []
+	latitudes = []
+
+	def __init__(self, latVar, longVar, radius, score, email):
 		self.latVar = 0
 		self.longVar = 0
 		self.radius = 0
 		self.score = 0
 		self.email = email
+		self.longitudes = []
+		self.latitudes = []
 		print ("new user created")
 
-con = None
+	def updateScore(latitude, longitude):
+		self.longitudes.append(longitude)
+		self.latitudes.append(latitude)
+		self.calculate()
+
+	def calculate():
+		self.latVar = self.latVar + 5
+		self.longVar = self.longVar  + 9
+		self.radius = self.radius + 3
+		self.score = self.latVar + self. longVar
+		return (latVar, longVar, radius, score)
+
+
 def createDBConnection():
 
 	try:
@@ -53,6 +71,22 @@ def addUserToDB(newUser):
 
 		return
 
+def retrieveUser(userid):
+
+	con = createDBConnection()
+
+	try:
+		cur = con.cursor()
+		cur.execute("SELECT * FROM users WHERE \"userid\" = %s", (userid,))
+		results = cur.fethone()
+		retrievedUser = User(results[1], results[2], results[3], results[4], results[5])
+		print(results[1], results[2], results[3], results[4], results[5])
+
+		retrievedUser.updateScore(123,456)
+		print(retrievedUser.score)
+
+		return retrievedUser
+
 
 @app.route('/create/', methods=['POST'])
 def createUser():
@@ -71,51 +105,13 @@ def createUser():
 def getScore():
 
 	userid = request.form['userid']
-	con = createDBConnection()
-
-	try:
-		cur = con.cursor()
-		cur.execute("SELECT * FROM users WHERE \"userid\" = %s", (userid,))
-		t = PrettyTable(['userid___', '|latVar______|', '|longVar_________|', '|radius___|', '|score__|'])
-		for record in cur:
-			t.add_row([record[0],record[1],record[2],record[3],record[4]])
-		return t.get_html_string()
-
-	except psycopg2.DatabaseError as e:
-
-		if con:
-			con.rollback
-
-		print "Error displaying the users." + e
-		sys.exit(1)
+	userScore = retrieveUser(userid)
+	return userScore.score
 
 
 @app.route('/')
 def index():
 	return "/create  -  creates a new user \n /score  -  get the score of the user"
-
-
-@app.route('/data')
-def names():
-	
-	con = createDBConnection()
-
-	try:
-		cur = con.cursor()
-		cur.execute("SELECT * FROM users")
-		t = PrettyTable(['|______.Name.______|', '|______.Password.______|', '|________.Email._________|', '|___.Distributor.___|', '|___.Salesperson.__|'])
-		for record in cur:
-			t.add_row([record[0],record[1],record[2],record[3],record[4]])
-		return t.get_html_string()
-		 
-
-	except psycopg2.DatabaseError as e:
-
-		if con:
-			con.rollback
-
-		print "Error displaying the users." + e
-		sys.exit(1)
 
 
 
