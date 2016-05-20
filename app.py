@@ -75,10 +75,11 @@ def retrieveUser(userid):
 
 	con = createDBConnection()
 
-
+	print("Created Connection")
 	cur = con.cursor()
 	cur.execute("SELECT * FROM users WHERE \"userid\" = %s", (userid,))
-	results = cur.fethone()
+	results = cur.fetchone()
+	print("Fetched"ß)
 	retrievedUser = User(results[1], results[2], results[3], results[4], results[5])
 	print(results[1], results[2], results[3], results[4], results[5])
 	retrievedUser.updateScore(123,456)
