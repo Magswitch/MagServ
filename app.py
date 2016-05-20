@@ -82,7 +82,6 @@ def retrieveUser(userid):
 	print("Fetched")
 	retrievedUser = User(results[1], results[2], results[3], results[4], results[5])
 	print(results[1], results[2], results[3], results[4], results[5])
-	retrievedUser.updateScore(123,456)
 	print(retrievedUser.score)
 	return retrievedUser
 
