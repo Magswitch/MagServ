@@ -6,18 +6,13 @@ app = Flask(__name__)
 
 class User:
 
-    def __init__(self, name, psswrd, email, distributor, salesperson):
-        self.name = name
-        self.psswrd = psswrd
-        self.email = email
-        self.distributor = distributor
-        self.salesperson = salesperson
-        self.favorites = [] 
-
-        print ("new user created: " + self.name)
-
-    def add_favorite(self, trick):
-        self.favorites.append(favorite)
+	def __init__(self, email):
+		self.latVar = 0
+		self.longVar = 0
+		self.radius = 0
+		self.score = 0
+		self.email = email
+		print ("new user created")
 
 con = None
 def createDBConnection():
@@ -26,8 +21,8 @@ def createDBConnection():
 		con = psycopg2.connect(database='gentryar', user='gentryar', password='ginger whale station')
 
 	except psycopg2.DatabaseError as e:
-	    print "Connection Error." + e
-	    sys.exit(1)
+		print "Connection Error." + e
+		sys.exit(1)
 
 	finally:
 		return con
@@ -37,9 +32,12 @@ def addUserToDB(newUser):
 
 	try:
 		cur = con.cursor()
-		cur.execute("INSERT INTO users VALUES(%s,%s,%s,%s,%s)", (newUser.name, newUser.psswrd, newUser.email, newUser.distributor, newUser.salesperson))
+		cur.execute("SELECT userID FROM users ORDER BY userID DESC LIMIT 1")
+		lastUserID = cur.fetchone()
+		nextUserID = lastUserID[0] + 1
+		cur.execute("INSERT INTO users VALUES(%s,%s,%s,%s,%s,%s)", (nextUserID, newUser.latVar, newUser.longVar, newUser.radius, newUser.score, newUser.email))
 		con.commit()
-		print ("Added '" + name + " to the database.")
+		print ("Added " + nextUserID + " to the database.")
 
 	except psycopg2.DatabaseError as e:
 
@@ -75,23 +73,32 @@ def createUser():
 	else:
 		return redirect('/')
 
-@app.route('/bug/', methods=['POST'])
-def bugReport():
-	if request.method == 'POST':
+@app.route('/score/', methods=['POST'])
+def getScore():
 
-		report = request.form['report']
-		with open("bugs.txt","a") as fo:
-  			fo.write(report + '\n@@@@@@@@@@@@@@@@\n')
-		return report
+	userid = request.form['userid']
+	con = createDBConnection()
 
-	else:
-		return redirect('/')
- 
+	try:
+		cur = con.cursor()
+		cur.execute("SELECT * FROM users WHERE \"userid\" = %s", (userid,))
+		t = PrettyTable(['|______.Name.______|', '|______.Password.______|', '|________.Email._________|', '|___.Distributor.___|', '|___.Salesperson.__|'])
+		for record in cur:
+			t.add_row([record[0],record[1],record[2],record[3],record[4]])
+		return t.get_html_string()
+
+	except psycopg2.DatabaseError as e:
+
+		if con:
+			con.rollback
+
+		print "Error displaying the users." + e
+		sys.exit(1)
+		
 
 @app.route('/')
 def index():
-	print "Accessed the server"
-	return send_file('magswitch-logo.png')
+	return "/create  -  creates a new user \n /score  -  get the score of the user"
 
 
 @app.route('/data')
