@@ -75,17 +75,15 @@ def retrieveUser(userid):
 
 	con = createDBConnection()
 
-	try:
-		cur = con.cursor()
-		cur.execute("SELECT * FROM users WHERE \"userid\" = %s", (userid,))
-		results = cur.fethone()
-		retrievedUser = User(results[1], results[2], results[3], results[4], results[5])
-		print(results[1], results[2], results[3], results[4], results[5])
 
-		retrievedUser.updateScore(123,456)
-		print(retrievedUser.score)
-
-		return retrievedUser
+	cur = con.cursor()
+	cur.execute("SELECT * FROM users WHERE \"userid\" = %s", (userid,))
+	results = cur.fethone()
+	retrievedUser = User(results[1], results[2], results[3], results[4], results[5])
+	print(results[1], results[2], results[3], results[4], results[5])
+	retrievedUser.updateScore(123,456)
+	print(retrievedUser.score)
+	return retrievedUser
 
 
 @app.route('/create/', methods=['POST'])
