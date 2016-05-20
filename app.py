@@ -58,17 +58,11 @@ def addUserToDB(newUser):
 def createUser():
 	if request.method == 'POST':
 
-		name = request.form['username']
-		psswrd = request.form['psswrd']
 		email = request.form['email']
-		distributor = request.form['distributor']
-		salesperson = request.form['salesperson']
-		print "processed form"
-
-		newUser = User(name,psswrd,email,distributor,salesperson)
+		newUser = User(email)
 		addUserToDB(newUser)
 
-		return redirect('/data')
+		return "Created"
 
 	else:
 		return redirect('/')
@@ -82,7 +76,7 @@ def getScore():
 	try:
 		cur = con.cursor()
 		cur.execute("SELECT * FROM users WHERE \"userid\" = %s", (userid,))
-		t = PrettyTable(['|______.Name.______|', '|______.Password.______|', '|________.Email._________|', '|___.Distributor.___|', '|___.Salesperson.__|'])
+		t = PrettyTable(['userid___', '|latVar______|', '|longVar_________|', '|radius___|', '|score__|'])
 		for record in cur:
 			t.add_row([record[0],record[1],record[2],record[3],record[4]])
 		return t.get_html_string()
@@ -94,7 +88,7 @@ def getScore():
 
 		print "Error displaying the users." + e
 		sys.exit(1)
-		
+
 
 @app.route('/')
 def index():
