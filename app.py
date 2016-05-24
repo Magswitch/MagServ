@@ -95,7 +95,7 @@ def addUserToDB(newUser):
 		nextUserID = lastUserID[0] + 1
 		cur.execute("INSERT INTO users VALUES(%s,%s)", (nextUserID, newUser.email))
 		newLocations = splitDataFromLocations(newUser.locations)
-		cur.execute("INSERT INTO locations VALUES(%s,%s,%s,%s)", (nextUserID, newLocations[0],newLocations[1],newLocations[2])
+		cur.execute("INSERT INTO locations VALUES(%s,%s,%s,%s)", (nextUserID, newLocations[0],newLocations[1],newLocations[2]))
 		con.commit()
 		print ("Added " + nextUserID + " to the database.")
 
