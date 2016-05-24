@@ -7,31 +7,71 @@ con = None
 
 class User:
 
+	locations = []
+
+	def __init__(self,email,locations = None):
+		if locations is None:
+			self.latVar = 0
+			self.longVar = 0
+			self.radius = 0
+			self.score = 0
+			self.email = email
+			print ("New user created")
+
+		else:
+			self.locations = locations
+			self.email = email
+			self.calculate()
+			print("User Restored")
+		
+
+	def calculate(self):
+		self.latVar = 4
+		self.longVar = 5
+		self.radius = 6
+		self.score = (self.latVar + self.longVar)
+		return (self.latVar, self.longVar, self.radius, self.score)
+
+
+class Location:
+
+	longitude = 0
+	latitude = 0
+	time = 0
+
+	def __init__(self, longitude, latitude, time):
+		self.longitude = longitude
+		self.latitude = latitude
+		self.time = time
+
+
+def updateScore(user, locations):
+	
+	for location in locations:
+		user.locations.append(location)
+	user.calculate()
+
+
+def createLocationsFromData(rawData): # need to find way to split correctly.
+
+	createdLocations = []
+	for x,y,z in zip(rawData[0],rawData[1],rawData[2]):
+		newLocation = Location(x,y,z)
+		createdLocations.append(newLocation)
+
+	return createdLocations
+
+
+def splitDataFromLocations(locations):
+
 	longitudes = []
 	latitudes = []
-
-	def __init__(self, latVar, longVar, radius, score, email):
-		self.latVar = 0
-		self.longVar = 0
-		self.radius = 0
-		self.score = 0
-		self.email = email
-		self.longitudes = []
-		self.latitudes = []
-		print ("new user created")
-
-	def updateScore(latitude, longitude):
-		self.longitudes.append(longitude)
-		self.latitudes.append(latitude)
-		self.calculate()
-
-	def calculate():
-		self.latVar = self.latVar + 5
-		self.longVar = self.longVar  + 9
-		self.radius = self.radius + 3
-		self.score = self.latVar + self. longVar
-		return (latVar, longVar, radius, score)
-
+	times = []
+	for item in locations:
+		longitudes.append(item.longitude)
+		latitudes.append(item.latitude)
+		times.append(item.time)
+	return (longitudes, latitudes, times)
 
 def createDBConnection():
 
@@ -53,7 +93,9 @@ def addUserToDB(newUser):
 		cur.execute("SELECT userID FROM users ORDER BY userID DESC LIMIT 1")
 		lastUserID = cur.fetchone()
 		nextUserID = lastUserID[0] + 1
-		cur.execute("INSERT INTO users VALUES(%s,%s,%s,%s,%s,%s)", (nextUserID, newUser.latVar, newUser.longVar, newUser.radius, newUser.score, newUser.email))
+		cur.execute("INSERT INTO users VALUES(%s,%s)", (nextUserID, newUser.email)
+		newLocations = splitDataFromLocations(newUser.locations)
+		cur.execute("INSERT INTO locations VALUES(%s,%s,%s,%s)", (nextUserID, newLocations[0],newLocations[1],newLocations[2])
 		con.commit()
 		print ("Added " + nextUserID + " to the database.")
 
@@ -71,7 +113,7 @@ def addUserToDB(newUser):
 
 		return
 
-def retrieveUser(userid):
+def retrieveUserByID(userid):
 
 	con = createDBConnection()
 
@@ -79,22 +121,37 @@ def retrieveUser(userid):
 	cur = con.cursor()
 	cur.execute("SELECT * FROM users WHERE \"userid\" = %s", (userid,))
 	results = cur.fetchone()
-	print("Fetched")
-	retrievedUser = User(results[1], results[2], results[3], results[4], results[5])
-	print(results[1], results[2], results[3], results[4], results[5])
-	print(retrievedUser.score)
+	print("Fetched from users")
+	email = results[1]
+	cur.execute("SELECT * FROM locations WHERE \"userid\" = %s", (userid,))
+	results = cur.fetchone()
+	print("Fetched from locations")
+	locations = createLocationsFromData(results[1],results[2],results[3])
+	retrievedUser = User(email,locations)
+
 	return retrievedUser
 
+def createUserWithEmail(email):
+
+	newUser = User(email)
+	addUserToDB(newUser)
+
+	return newUser
+
+def createUserWithLocations(email, locations):
+	newUser = User(email,locations)
+	addUserToDB(newUser)
+	return newUser
 
 @app.route('/create/', methods=['POST'])
 def createUser():
 	if request.method == 'POST':
-
 		email = request.form['email']
-		newUser = User(email)
-		addUserToDB(newUser)
 
-		return "Created"
+		lats = (1,2,3)
+		longs = (4,5,6)
+		times = (7,8,9)
+		createUserWithLocations('testemail', [longs,lats,times])
 
 	else:
 		return redirect('/')
@@ -110,7 +167,6 @@ def getScore():
 @app.route('/')
 def index():
 	return "/create  -  creates a new user \n /score  -  get the score of the user"
-
 
 
 if __name__ == '__main__':
