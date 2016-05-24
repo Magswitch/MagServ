@@ -93,7 +93,7 @@ def addUserToDB(newUser):
 		cur.execute("SELECT userID FROM users ORDER BY userID DESC LIMIT 1")
 		lastUserID = cur.fetchone()
 		nextUserID = lastUserID[0] + 1
-		cur.execute("INSERT INTO users VALUES(%s,%s)", (nextUserID, newUser.email)
+		cur.execute("INSERT INTO users VALUES(%s,%s)", (nextUserID, newUser.email))
 		newLocations = splitDataFromLocations(newUser.locations)
 		cur.execute("INSERT INTO locations VALUES(%s,%s,%s,%s)", (nextUserID, newLocations[0],newLocations[1],newLocations[2])
 		con.commit()
