@@ -310,7 +310,8 @@ a.btn-cta {
 }
 /* ======= About Section ======= */
 .about-section {
-  padding-top: 50px;
+  padding-top: 90px;
+  padding-bottom: 90px;
 }
 .about-section .section-title {
   margin: 0;
@@ -325,25 +326,25 @@ a.btn-cta {
   margin: 0 auto;
   margin-bottom: 60px;
 }
-.about-section .items-wrapper {
-  margin-bottom: 60px;
+.items-wrapper {
+  margin-bottom: 0 auto;
 }
-.about-section .items-wrapper .figure-holder {
+.items-wrapper .figure-holder {
   min-height: 170px;
   margin-bottom: 15px;
   vertical-align: bottom;
 }
-.about-section .items-wrapper .item-inner {
+.items-wrapper .item-inner {
   padding: 30px;
 }
-.about-section .items-wrapper .item-title {
+.items-wrapper .item-title {
   color: #14576b;
   font-size: 18px;
   font-weight: bold;
   margin: 0;
   margin-bottom: 15px;
 }
-.about-section .items-wrapper .item-desc {
+.items-wrapper .item-desc {
   color: #616670;
 }
 .technologies {
