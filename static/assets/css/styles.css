@@ -326,25 +326,25 @@ a.btn-cta {
   margin: 0 auto;
   margin-bottom: 60px;
 }
-.items-wrapper {
+.about-section .items-wrapper {
   margin-bottom: 0 auto;
 }
-.items-wrapper .figure-holder {
+.about-section .items-wrapper .figure-holder {
   min-height: 170px;
   margin-bottom: 15px;
   vertical-align: bottom;
 }
-.items-wrapper .item-inner {
+.about-section .items-wrapper .item-inner {
   padding: 30px;
 }
-.items-wrapper .item-title {
+.about-section .items-wrapper .item-title {
   color: #14576b;
   font-size: 18px;
   font-weight: bold;
   margin: 0;
   margin-bottom: 15px;
 }
-.items-wrapper .item-desc {
+.about-section .items-wrapper .item-desc {
   color: #616670;
 }
 .technologies {
@@ -405,7 +405,7 @@ a.btn-cta {
 }
 /* ======= Testimonials Section ======= */
 .testimonials-section {
-  background: #14576b url('../images/map.png') no-repeat center center;
+  background: #14576b;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -449,7 +449,7 @@ a.btn-cta {
   position: absolute;
   left: 30px;
   text-align: center;
-  margin-botton: 10px;
+  margin-bottom: 10px;
 }
 .testimonials-section .item .profile-image {
   display: inline-block;
@@ -571,9 +571,8 @@ a.btn-cta {
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  border-width: 2px;
   border-style: solid;
-  border-width: 5px;
+  border-width: 8px;
   border-color: #5e120e;
   background: #fff;
   min-height: 390px;
@@ -595,6 +594,7 @@ a.btn-cta {
   font-size: 18px;
   margin: 0;
   min-height: 60px;
+  margin-bottom: -10px;
 }
 .pricing-wrapper .price-figure {
   font-size: 46px;
@@ -612,6 +612,7 @@ a.btn-cta {
 }
 .pricing-wrapper .price-desc {
   margin-bottom: 30px;
+  margin-top: 15px;
   min-height: 120px;
 }
 .pricing-wrapper a.btn {
@@ -739,7 +740,7 @@ a.btn-cta {
 .contact-section {
   padding-top: 90px;
   padding-bottom: 90px;
-  background: #494d55 url('../images/map.png') no-repeat center center;
+  background: #494d55 url('../images/hero-1') no-repeat center center;
   color: #fff;
 }
 .contact-section .section-title {
